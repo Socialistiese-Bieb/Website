@@ -1,60 +1,24 @@
-<?php
-/**
- * Pixl functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
- * @package Pixl
- * @since Pixl 1.0
- */
-
-
-if ( ! function_exists( 'pixl_support' ) ) :
-
-	/**
-	 * Sets up theme defaults and registers support for various WordPress features.
-	 *
-	 * @since Pixl 1.0
-	 *
-	 * @return void
-	 */
-	function pixl_support() {
-
-		// Enqueue editor styles.
-		add_editor_style( 'style.css' );
-
-		// Make theme available for translation.
-		load_theme_textdomain( 'pixl' );
-	}
-
-endif;
-
-add_action( 'after_setup_theme', 'pixl_support' );
-
-if ( ! function_exists( 'pixl_styles' ) ) :
-
-	/**
-	 * Enqueue styles.
-	 *
-	 * @since Pixl 1.0
-	 *
-	 * @return void
-	 */
-	function pixl_styles() {
-
-		// Register theme stylesheet.
-		wp_register_style(
-			'pixl-style',
-			get_template_directory_uri() . '/style.css',
-			array(),
-			wp_get_theme()->get( 'Version' )
-		);
-
-		// Enqueue theme stylesheet.
-		wp_enqueue_style( 'pixl-style' );
-
-	}
-
-endif;
-
-add_action( 'wp_enqueue_scripts', 'pixl_styles' );
+<br>
+<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
+<tr><th align="left" bgcolor="#f57900" colspan="5">
+<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function add_action() in C:\wamp64\www\Website\wp-content\themes\pixl\functions.php on line <i>32</i>
+</th></tr>
+<tr><th align="left" bgcolor="#f57900" colspan="5">
+<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function add_action() in C:\wamp64\www\Website\wp-content\themes\pixl\functions.php on line <i>32</i>
+</th></tr>
+<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
+<tr>
+<th align="center" bgcolor="#eeeeec">#</th>
+<th align="left" bgcolor="#eeeeec">Time</th>
+<th align="left" bgcolor="#eeeeec">Memory</th>
+<th align="left" bgcolor="#eeeeec">Function</th>
+<th align="left" bgcolor="#eeeeec">Location</th>
+</tr>
+<tr>
+<td bgcolor="#eeeeec" align="center">1</td>
+<td bgcolor="#eeeeec" align="center">0.0007</td>
+<td bgcolor="#eeeeec" align="right">359896</td>
+<td bgcolor="#eeeeec">{main}(  )</td>
+<td title="C:\wamp64\www\Website\wp-content\themes\pixl\functions.php" bgcolor="#eeeeec">...\functions.php<b>:</b>0</td>
+</tr>
+</table></font>

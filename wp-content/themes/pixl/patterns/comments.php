@@ -1,11 +1,3 @@
-<?php
-/**
- * Title: Comments
- * slug: pixl/comments
- * inserter: no
- */
-
-?>
 
 <!-- wp:comments {"className":"wp-block-comments-query-loop "} -->
 <div class="wp-block-comments wp-block-comments-query-loop"><!-- wp:comments-title {"level":3} /-->
