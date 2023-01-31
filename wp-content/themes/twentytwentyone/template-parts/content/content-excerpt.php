@@ -1,23 +1,25 @@
-<article id="post-<br />
-<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="><span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function the_ID() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-excerpt.php on line <i>14</i>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function the_ID() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-excerpt.php on line <i>14</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0016</td>
-<td bgcolor="#eeeeec" align="right">360336</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-excerpt.php" bgcolor="#eeeeec">...\content-excerpt.php<b>:</b>0</td>
-</tr>
+<?php
+/**
+ * Template part for displaying post archives and search results
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
 
-</article>
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+	<?php get_template_part( 'template-parts/header/excerpt-header', get_post_format() ); ?>
+
+	<div class="entry-content">
+		<?php get_template_part( 'template-parts/excerpt/excerpt', get_post_format() ); ?>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer default-max-width">
+		<?php twenty_twenty_one_entry_meta_footer(); ?>
+	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->

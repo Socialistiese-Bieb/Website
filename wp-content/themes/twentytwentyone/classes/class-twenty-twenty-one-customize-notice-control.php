@@ -1,24 +1,46 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Class "WP_Customize_Control" not found in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-notice-control.php on line <i>17</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Class "WP_Customize_Control" not found in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-notice-control.php on line <i>17</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0009</td>
-<td bgcolor="#eeeeec" align="right">361360</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-notice-control.php" bgcolor="#eeeeec">...\class-twenty-twenty-one-customize-notice-control.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * Customize API: Twenty_Twenty_One_Customize_Notice_Control class
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+/**
+ * Customize Notice Control class.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @see WP_Customize_Control
+ */
+class Twenty_Twenty_One_Customize_Notice_Control extends WP_Customize_Control {
+	/**
+	 * The control type.
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @var string
+	 */
+	public $type = 'twenty-twenty-one-notice';
+
+	/**
+	 * Renders the control content.
+	 *
+	 * This simply prints the notice we need.
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @return void
+	 */
+	public function render_content() {
+		?>
+		<div class="notice notice-warning">
+			<p><?php esc_html_e( 'To access the Dark Mode settings, select a light background color.', 'twentytwentyone' ); ?></p>
+			<p><a href="<?php echo esc_url( __( 'https://wordpress.org/support/article/twenty-twenty-one/#dark-mode-support', 'twentytwentyone' ) ); ?>">
+				<?php esc_html_e( 'Learn more about Dark Mode.', 'twentytwentyone' ); ?>
+			</a></p>
+		</div><!-- .notice -->
+		<?php
+	}
+}

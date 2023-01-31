@@ -1,24 +1,42 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function get_bloginfo() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\header\site-branding.php on line <i>10</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function get_bloginfo() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\header\site-branding.php on line <i>10</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0013</td>
-<td bgcolor="#eeeeec" align="right">360384</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\header\site-branding.php" bgcolor="#eeeeec">...\site-branding.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * Displays header site branding
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+$blog_info    = get_bloginfo( 'name' );
+$description  = get_bloginfo( 'description', 'display' );
+$show_title   = ( true === get_theme_mod( 'display_title_and_tagline', true ) );
+$header_class = $show_title ? 'site-title' : 'screen-reader-text';
+
+?>
+
+<?php if ( has_custom_logo() && $show_title ) : ?>
+	<div class="site-logo"><?php the_custom_logo(); ?></div>
+<?php endif; ?>
+
+<div class="site-branding">
+
+	<?php if ( has_custom_logo() && ! $show_title ) : ?>
+		<div class="site-logo"><?php the_custom_logo(); ?></div>
+	<?php endif; ?>
+
+	<?php if ( $blog_info ) : ?>
+		<?php if ( is_front_page() && ! is_paged() ) : ?>
+			<h1 class="<?php echo esc_attr( $header_class ); ?>"><?php echo esc_html( $blog_info ); ?></h1>
+		<?php elseif ( is_front_page() && ! is_home() ) : ?>
+			<h1 class="<?php echo esc_attr( $header_class ); ?>"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></h1>
+		<?php else : ?>
+			<p class="<?php echo esc_attr( $header_class ); ?>"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( $blog_info ); ?></a></p>
+		<?php endif; ?>
+	<?php endif; ?>
+
+	<?php if ( $description && true === get_theme_mod( 'display_title_and_tagline', true ) ) : ?>
+		<p class="site-description">
+			<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		</p>
+	<?php endif; ?>
+</div><!-- .site-branding -->

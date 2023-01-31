@@ -1,24 +1,65 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\search.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\search.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0009</td>
-<td bgcolor="#eeeeec" align="right">360744</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\search.php" bgcolor="#eeeeec">...\search.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * The template for displaying search results pages
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+get_header();
+
+if ( have_posts() ) {
+	?>
+	<header class="page-header alignwide">
+		<h1 class="page-title">
+			<?php
+			printf(
+				/* translators: %s: Search term. */
+				esc_html__( 'Results for "%s"', 'twentytwentyone' ),
+				'<span class="page-description search-term">' . esc_html( get_search_query() ) . '</span>'
+			);
+			?>
+		</h1>
+	</header><!-- .page-header -->
+
+	<div class="search-result-count default-max-width">
+		<?php
+		printf(
+			esc_html(
+				/* translators: %d: The number of search results. */
+				_n(
+					'We found %d result for your search.',
+					'We found %d results for your search.',
+					(int) $wp_query->found_posts,
+					'twentytwentyone'
+				)
+			),
+			(int) $wp_query->found_posts
+		);
+		?>
+	</div><!-- .search-result-count -->
+	<?php
+	// Start the Loop.
+	while ( have_posts() ) {
+		the_post();
+
+		/*
+		 * Include the Post-Format-specific template for the content.
+		 * If you want to override this in a child theme, then include a file
+		 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+		 */
+		get_template_part( 'template-parts/content/content-excerpt', get_post_format() );
+	} // End the loop.
+
+	// Previous/next page navigation.
+	twenty_twenty_one_the_posts_navigation();
+
+	// If no content, include the "No posts found" template.
+} else {
+	get_template_part( 'template-parts/content/content-none' );
+}
+
+get_footer();

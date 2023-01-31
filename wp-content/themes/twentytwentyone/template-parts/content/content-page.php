@@ -1,23 +1,57 @@
-<article id="post-<br />
-<font size='1'><table class='xdebug-error xe-uncaught-exception' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="><span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function the_ID() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-page.php on line <i>14</i>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function the_ID() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-page.php on line <i>14</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0010</td>
-<td bgcolor="#eeeeec" align="right">360416</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\template-parts\content\content-page.php" bgcolor="#eeeeec">...\content-page.php<b>:</b>0</td>
-</tr>
+<?php
+/**
+ * Template part for displaying page content in page.php
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
 
-</article>
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+	<?php if ( ! is_front_page() ) : ?>
+		<header class="entry-header alignwide">
+			<?php get_template_part( 'template-parts/header/entry-header' ); ?>
+			<?php twenty_twenty_one_post_thumbnail(); ?>
+		</header><!-- .entry-header -->
+	<?php elseif ( has_post_thumbnail() ) : ?>
+		<header class="entry-header alignwide">
+			<?php twenty_twenty_one_post_thumbnail(); ?>
+		</header><!-- .entry-header -->
+	<?php endif; ?>
+
+	<div class="entry-content">
+		<?php
+		the_content();
+
+		wp_link_pages(
+			array(
+				'before'   => '<nav class="page-links" aria-label="' . esc_attr__( 'Page', 'twentytwentyone' ) . '">',
+				'after'    => '</nav>',
+				/* translators: %: Page number. */
+				'pagelink' => esc_html__( 'Page %', 'twentytwentyone' ),
+			)
+		);
+		?>
+	</div><!-- .entry-content -->
+
+	<?php if ( get_edit_post_link() ) : ?>
+		<footer class="entry-footer default-max-width">
+			<?php
+			edit_post_link(
+				sprintf(
+					/* translators: %s: Post title. Only visible to screen readers. */
+					esc_html__( 'Edit %s', 'twentytwentyone' ),
+					'<span class="screen-reader-text">' . get_the_title() . '</span>'
+				),
+				'<span class="edit-link">',
+				'</span>'
+			);
+			?>
+		</footer><!-- .entry-footer -->
+	<?php endif; ?>
+</article><!-- #post-<?php the_ID(); ?> -->

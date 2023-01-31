@@ -1,24 +1,92 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function add_action() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\inc\back-compat.php on line <i>24</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function add_action() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\inc\back-compat.php on line <i>24</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0012</td>
-<td bgcolor="#eeeeec" align="right">360752</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\inc\back-compat.php" bgcolor="#eeeeec">...\back-compat.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * Back compat functionality
+ *
+ * Prevents the theme from running on WordPress versions prior to 5.3,
+ * since this theme is not meant to be backward compatible beyond that and
+ * relies on many newer functions and markup changes introduced in 5.3.
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+/**
+ * Display upgrade notice on theme switch.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @return void
+ */
+function twenty_twenty_one_switch_theme() {
+	add_action( 'admin_notices', 'twenty_twenty_one_upgrade_notice' );
+}
+add_action( 'after_switch_theme', 'twenty_twenty_one_switch_theme' );
+
+/**
+ * Adds a message for unsuccessful theme switch.
+ *
+ * Prints an update nag after an unsuccessful attempt to switch to
+ * the theme on WordPress versions prior to 5.3.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @global string $wp_version WordPress version.
+ *
+ * @return void
+ */
+function twenty_twenty_one_upgrade_notice() {
+	echo '<div class="error"><p>';
+	printf(
+		/* translators: %s: WordPress Version. */
+		esc_html__( 'This theme requires WordPress 5.3 or newer. You are running version %s. Please upgrade.', 'twentytwentyone' ),
+		esc_html( $GLOBALS['wp_version'] )
+	);
+	echo '</p></div>';
+}
+
+/**
+ * Prevents the Customizer from being loaded on WordPress versions prior to 5.3.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @global string $wp_version WordPress version.
+ *
+ * @return void
+ */
+function twenty_twenty_one_customize() {
+	wp_die(
+		sprintf(
+			/* translators: %s: WordPress Version. */
+			esc_html__( 'This theme requires WordPress 5.3 or newer. You are running version %s. Please upgrade.', 'twentytwentyone' ),
+			esc_html( $GLOBALS['wp_version'] )
+		),
+		'',
+		array(
+			'back_link' => true,
+		)
+	);
+}
+add_action( 'load-customize.php', 'twenty_twenty_one_customize' );
+
+/**
+ * Prevents the Theme Preview from being loaded on WordPress versions prior to 5.3.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @global string $wp_version WordPress version.
+ *
+ * @return void
+ */
+function twenty_twenty_one_preview() {
+	if ( isset( $_GET['preview'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		wp_die(
+			sprintf(
+				/* translators: %s: WordPress Version. */
+				esc_html__( 'This theme requires WordPress 5.3 or newer. You are running version %s. Please upgrade.', 'twentytwentyone' ),
+				esc_html( $GLOBALS['wp_version'] )
+			)
+		);
+	}
+}
+add_action( 'template_redirect', 'twenty_twenty_one_preview' );

@@ -1,24 +1,69 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Class "WP_Customize_Color_Control" not found in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-color-control.php on line <i>17</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Class "WP_Customize_Color_Control" not found in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-color-control.php on line <i>17</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0009</td>
-<td bgcolor="#eeeeec" align="right">361888</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\classes\class-twenty-twenty-one-customize-color-control.php" bgcolor="#eeeeec">...\class-twenty-twenty-one-customize-color-control.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * Customize API: WP_Customize_Color_Control class
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+/**
+ * Customize Color Control class.
+ *
+ * @since Twenty Twenty-One 1.0
+ *
+ * @see WP_Customize_Control
+ */
+class Twenty_Twenty_One_Customize_Color_Control extends WP_Customize_Color_Control {
+	/**
+	 * The control type.
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @var string
+	 */
+	public $type = 'twenty-twenty-one-color';
+
+	/**
+	 * Colorpicker palette
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @var array
+	 */
+	public $palette;
+
+	/**
+	 * Enqueue control related scripts/styles.
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+		parent::enqueue();
+
+		// Enqueue the script.
+		wp_enqueue_script(
+			'twentytwentyone-control-color',
+			get_theme_file_uri( 'assets/js/palette-colorpicker.js' ),
+			array( 'customize-controls', 'jquery', 'customize-base', 'wp-color-picker' ),
+			wp_get_theme()->get( 'Version' ),
+			false
+		);
+	}
+
+	/**
+	 * Refresh the parameters passed to the JavaScript via JSON.
+	 *
+	 * @since Twenty Twenty-One 1.0
+	 *
+	 * @uses WP_Customize_Control::to_json()
+	 *
+	 * @return void
+	 */
+	public function to_json() {
+		parent::to_json();
+		$this->json['palette'] = $this->palette;
+	}
+}

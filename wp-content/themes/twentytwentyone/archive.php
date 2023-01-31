@@ -1,24 +1,38 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\archive.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\archive.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0009</td>
-<td bgcolor="#eeeeec" align="right">360168</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\archive.php" bgcolor="#eeeeec">...\archive.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * The template for displaying archive pages
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+get_header();
+
+$description = get_the_archive_description();
+?>
+
+<?php if ( have_posts() ) : ?>
+
+	<header class="page-header alignwide">
+		<?php the_archive_title( '<h1 class="page-title">', '</h1>' ); ?>
+		<?php if ( $description ) : ?>
+			<div class="archive-description"><?php echo wp_kses_post( wpautop( $description ) ); ?></div>
+		<?php endif; ?>
+	</header><!-- .page-header -->
+
+	<?php while ( have_posts() ) : ?>
+		<?php the_post(); ?>
+		<?php get_template_part( 'template-parts/content/content', get_theme_mod( 'display_excerpt_or_full_post', 'excerpt' ) ); ?>
+	<?php endwhile; ?>
+
+	<?php twenty_twenty_one_the_posts_navigation(); ?>
+
+<?php else : ?>
+	<?php get_template_part( 'template-parts/content/content-none' ); ?>
+<?php endif; ?>
+
+<?php
+get_footer();

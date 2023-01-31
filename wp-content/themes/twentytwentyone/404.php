@@ -1,24 +1,27 @@
-<br>
-<font size="1"><table class="xdebug-error xe-uncaught-exception" dir="ltr" border="1" cellspacing="0" cellpadding="1">
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Fatal error: Uncaught Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\404.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#f57900" colspan="5">
-<span style="background-color: #cc0000; color: #fce94f; font-size: x-large;">( ! )</span> Error: Call to undefined function get_header() in C:\wamp64\www\Website\wp-content\themes\twentytwentyone\404.php on line <i>12</i>
-</th></tr>
-<tr><th align="left" bgcolor="#e9b96e" colspan="5">Call Stack</th></tr>
-<tr>
-<th align="center" bgcolor="#eeeeec">#</th>
-<th align="left" bgcolor="#eeeeec">Time</th>
-<th align="left" bgcolor="#eeeeec">Memory</th>
-<th align="left" bgcolor="#eeeeec">Function</th>
-<th align="left" bgcolor="#eeeeec">Location</th>
-</tr>
-<tr>
-<td bgcolor="#eeeeec" align="center">1</td>
-<td bgcolor="#eeeeec" align="center">0.0010</td>
-<td bgcolor="#eeeeec" align="right">359920</td>
-<td bgcolor="#eeeeec">{main}(  )</td>
-<td title="C:\wamp64\www\Website\wp-content\themes\twentytwentyone\404.php" bgcolor="#eeeeec">...\404.php<b>:</b>0</td>
-</tr>
-</table></font>
+<?php
+/**
+ * The template for displaying 404 pages (not found)
+ *
+ * @link https://codex.wordpress.org/Creating_an_Error_404_Page
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_One
+ * @since Twenty Twenty-One 1.0
+ */
+
+get_header();
+?>
+
+	<header class="page-header alignwide">
+		<h1 class="page-title"><?php esc_html_e( 'Nothing here', 'twentytwentyone' ); ?></h1>
+	</header><!-- .page-header -->
+
+	<div class="error-404 not-found default-max-width">
+		<div class="page-content">
+			<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try a search?', 'twentytwentyone' ); ?></p>
+			<?php get_search_form(); ?>
+		</div><!-- .page-content -->
+	</div><!-- .error-404 -->
+
+<?php
+get_footer();
